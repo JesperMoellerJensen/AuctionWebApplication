@@ -9,5 +9,6 @@ namespace AuctionWebApplication.Helpers
     {
         Uri BaseUri { get; set; }
         T Get<T>(string query);
+        bool Post<T>(T data, string query);
     }
 }

@@ -19,5 +19,23 @@ namespace AuctionWebApplication.Helpers
                 return response.Content.ReadAsAsync<T>().Result;
             }
         }
+        public bool Post<T>(T data, string query)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = BaseUri;
+
+                var postTask = httpClient.PostAsJsonAsync<T>(query, data);
+                postTask.Wait();
+
+                var result = postTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

@@ -20,18 +20,38 @@ namespace AuctionWebApplication.Controllers
             _apiHelper.BaseUri = new Uri("http://localhost:57395");
         }
 
-        // GET: /<controller>/
+        [HttpGet]
         public IActionResult Index()
         {
             var auctionItemModelsResult = _apiHelper.Get<List<AuctionItemModel>>("api/auctions");
             return View(auctionItemModelsResult);
         }
 
+        [HttpGet]
         public IActionResult Details(int itemNumber)
         {
-            var test = itemNumber;
             var auctionItemModelResult = _apiHelper.Get<AuctionItemModel>("api/auctions/" + itemNumber);
             return View(auctionItemModelResult);
+        }
+
+        [HttpPost]
+        public IActionResult Details(AuctionItemModel item)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(item);
+            }
+
+            var bidModelResult = new BidModel
+            {
+                ItemNumber = item.ItemNumber,
+                CustomName = item.BidCustomName,
+                CustomPhone = item.BidCustomPhone,
+                Price = item.BidPrice
+            };
+
+            _apiHelper.Post(bidModelResult, "api/auctions/provideBid");
+            return Redirect("Index");
         }
     }
 }
