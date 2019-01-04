@@ -1,0 +1,34 @@
+﻿@model List<AuctionItemModel>
+
+<h2>Auction</h2>
+<table style="width:100%">
+    <tr>
+        <th>BidCustomName</th>
+        <th>BidCustomPhone</th>
+        <th>BidPrice</th>
+        <th>BidTimeStamp</th>
+        <th>ItemDescription</th>
+        <th>ItemNumber</th>
+        <th>RatingPrice</th>
+        <th></th>
+    </tr>
+    @{
+        foreach (AuctionItemModel item in Model)
+        {
+            <tr>
+                <td>@item.BidCustomName</td>
+                <td>@item.BidCustomPhone</td>
+                <td>@item.BidPrice</td>
+                <td>@item.BidTimeStamp</td>
+                <td>@item.ItemDescription</td>
+                <td>@item.ItemNumber</td>
+                <td>@item.RatingPrice</td>
+                <td>
+                    <a>
+                        @Html.ActionLink("Select", "Details", "Auction", new {itemNumber = item.ItemNumber})
+                    </a>
+                </td>
+            </tr>
+        }
+    }
+</table>

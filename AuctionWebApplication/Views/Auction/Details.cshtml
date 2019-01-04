@@ -1,0 +1,61 @@
+﻿@model AuctionItemModel
+
+<h2>Details</h2>
+
+@using (Html.BeginForm())
+{
+    <dl class="dl-horizontal">
+            <legend>AuctionItem</legend>
+
+            <dt>
+                @Html.LabelFor(model => model.BidCustomName)
+            </dt>
+            <dd>
+                @Html.TextBoxFor(model => model.BidCustomName)
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.BidCustomPhone)
+            </dt>
+            <dd>
+                @Html.TextBoxFor(model => model.BidCustomPhone)
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.BidPrice)
+            </dt>
+            <dd>
+                @Html.TextBoxFor(model => model.BidPrice)
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.BidTimeStamp)
+            </dt>
+            <dd>
+                @Model.BidTimeStamp
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.ItemDescription)
+            </dt>
+            <dd>
+                @Model.ItemDescription
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.ItemNumber)
+            </dt>
+            <dd>
+                @Model.ItemNumber
+            </dd>
+
+            <dt>
+                @Html.LabelFor(model => model.RatingPrice)
+            </dt>
+            <dd>
+                @Model.RatingPrice
+            </dd>
+
+            <input type="submit" value="Save" />
+    </dl>
+}
