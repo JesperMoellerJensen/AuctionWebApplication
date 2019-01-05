@@ -11,7 +11,7 @@
     <span asp-validation-for="BidPrice"></span><br />
     <label asp-for="BidTimeStamp"></label>: @Model.BidTimeStamp <br />
     <label asp-for="ItemDescription"></label>: @Model.ItemDescription <br />
-    <label asp-for="ItemNumber"></label>: @Model.ItemNumber <br />
+    <label asp-for="ItemNumber"></label> <input type="hidden" value="@Model.ItemNumber"/><br />
     <label asp-for="RatingPrice"></label>: @Model.RatingPrice <br />
     <button type="submit">Save</button>
 </form>
