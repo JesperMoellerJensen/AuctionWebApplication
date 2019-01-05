@@ -38,31 +38,31 @@ namespace AuctionWebAPI.Controllers
         }
 
         [HttpPost("provideBid")]
-        public string ProvideBid([FromBody] Bid bid)
+        public IActionResult ProvideBid([FromBody] Bid bid)
         {
             if (bid == null)
             {
-                return "Kan ikke omdanne til bid";
+                return BadRequest();
             }
 
             var auctionItem = _auctionRepository.GetAuctionItem(bid.ItemNumber);
             if (auctionItem == null)
             {
-                return "Varen findes ikke";
+                return BadRequest("Varen findes ikke");
             }
 
             if (auctionItem.BidPrice > bid.Price)
             {
-                return "Bud for lavt";
+                return BadRequest("Bud for lavt");
             }
 
             _auctionRepository.ApplyBid(bid);
             if (!_auctionRepository.Save())
             {
-                return "A problem happened while handling your request";
+                return StatusCode(500);
             }   
 
-            return "Ok";
+            return Ok();
         }
 
     }

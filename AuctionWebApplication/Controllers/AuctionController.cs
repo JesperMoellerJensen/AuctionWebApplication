@@ -28,8 +28,21 @@ namespace AuctionWebApplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int itemNumber)
+        public IActionResult MyAuctions(string name)
         {
+            var auctionItemModels = _apiHelper.Get<List<AuctionItemModel>>("api/auctions");
+            var auctionItemModelsresult = auctionItemModels.Where(a => a.BidCustomName == name).ToList();
+
+            return View(auctionItemModelsresult);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int? itemNumber)
+        {
+            if (itemNumber == null)
+            {
+                return Redirect("Index");
+            }
             var auctionItemModelResult = _apiHelper.Get<AuctionItemModel>("api/auctions/" + itemNumber);
             return View(auctionItemModelResult);
         }
@@ -37,6 +50,11 @@ namespace AuctionWebApplication.Controllers
         [HttpPost]
         public IActionResult Details(AuctionItemModel item)
         {
+            if (item == null)
+            {
+                return Redirect("Index");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(item);
@@ -50,8 +68,16 @@ namespace AuctionWebApplication.Controllers
                 Price = item.BidPrice
             };
 
-            _apiHelper.Post(bidModelResult, "api/auctions/provideBid");
-            return Redirect("Index");
+            if (_apiHelper.Post(bidModelResult, "api/auctions/provideBid"))
+            {
+                ViewBag.BidComepleted = true;
+            }
+            else
+            {
+                ViewBag.BidComepleted = false;
+            }
+            return View(item);
+            //return Redirect("Index");
         }
     }
 }

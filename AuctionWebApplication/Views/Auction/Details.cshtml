@@ -3,15 +3,32 @@
 <h2>Details for item with number @Model.ItemNumber</h2>
 
 <form asp-controller="Auction" asp-action="Details" method="post">
-    Name: <input asp-for="BidCustomName" /> <br />
+    <label>Name</label> <input asp-for="BidCustomName" /> <br />
     <span asp-validation-for="BidCustomName"></span><br />
-    Phone: <input asp-for="BidCustomPhone" /> <br />
+    <label>Phone</label> <input asp-for="BidCustomPhone" /> <br />
     <span asp-validation-for="BidCustomPhone"></span><br />
-    Price: <input asp-for="BidPrice" /> <br />
+    <label>Price</label> <input asp-for="BidPrice" /> <br />
     <span asp-validation-for="BidPrice"></span><br />
-    <label asp-for="BidTimeStamp"></label>: @Model.BidTimeStamp <br />
-    <label asp-for="ItemDescription"></label>: @Model.ItemDescription <br />
-    <label asp-for="ItemNumber"></label> <input type="hidden" value="@Model.ItemNumber"/><br />
-    <label asp-for="RatingPrice"></label>: @Model.RatingPrice <br />
+    <label>Timestamp</label> @Model.BidTimeStamp <br />
+    <label>Description</label> @Model.ItemDescription <br />
+    <label>Item number</label> @Model.ItemNumber <br />
+    <label>Rating price</label> @Model.RatingPrice <br />
+    <input asp-for="ItemNumber" type="hidden" />
+    <input asp-for="ItemDescription" type="hidden" />
+    <input asp-for="RatingPrice" type="hidden" />
+    <input asp-for="BidTimeStamp" type="hidden" />
     <button type="submit">Save</button>
+    @if (ViewBag.BidComepleted != null)
+    {
+        if ((bool)ViewBag.BidComepleted == true)
+        {
+            <h3>Bid comepleted</h3>
+        }
+        else
+        {
+            <h3>Bid not comepleted</h3>
+        }
+    }
 </form>
+<br />
+<a>@Html.ActionLink("Back","Index","Auction")</a>
